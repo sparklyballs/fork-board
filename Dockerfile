@@ -21,10 +21,7 @@ RUN \
 
 RUN \
     yarn add \
-        electron \
-        electron-builder \
         electron-packager \
-        electron-installer-linux \
         --dev
 
 

@@ -13,8 +13,11 @@ build() {
 	cd fork-board-${pkgver}
 	yarn add electron-packager
 	yarn install
-	electron-packager . fork-board --linux --amd64  --out dist/ --overwrite
+	node_modules/.bin/electron-packager . fork-board --linux --amd64  --out dist/ --overwrite
 }
 package() {
 	cd fork-board-${pkgver}
+	mkdir -p "${pkgdir}/opt/${pkgname}"
+	cp -r dist/fork-board-linux-x64/* "${pkgdir}/opt/${pkgname}"
+	chmod -R a+rx "${pkgdir}/opt/${pkgname}"
 }
