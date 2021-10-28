@@ -19,5 +19,6 @@ package() {
 	cd fork-board-${pkgver}
 	mkdir -p "${pkgdir}/opt/${pkgname}"
 	cp -r dist/fork-board-linux-x64/* "${pkgdir}/opt/${pkgname}"
-	chmod -R a+rx "${pkgdir}/opt/${pkgname}"
+	chmod -R 0777 "${pkgdir}/opt/${pkgname}"/resources
+	chmod  a+rx "${pkgdir}/opt/${pkgname}"/fork-board
 }
