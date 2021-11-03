@@ -5,6 +5,6 @@ Comment=A small dashboard application to show balances of wallets from Chia and 
 Exec=fork-board
 Terminal=false
 Type=Application
-Icon=
+Icon=fork-board
 Categories=Utility;
 StartupWMClass=ForkBoard
