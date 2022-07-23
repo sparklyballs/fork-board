@@ -62,8 +62,10 @@ ADD forkboard.sh /src/
 RUN \
 	mkdir -p /build/opt/forkboard \
 	&& cp -r out/forkboard-linux-x64/* /build/opt/forkboard \
-	&& mkdir -p /build/opt/forkboard/resources/app/{assets/config,logs} \
-	&& chmod a+rw -R /build/opt/forkboard/resources/app/{assets/config,logs} \
+	&& mkdir -p /build/opt/forkboard/resources/app/assets/config \
+	&& mkdir -p /build/opt/forkboard/resources/app/logs  \
+	&& chmod a+rw -R /build/opt/forkboard/resources/app/assets/config \
+	&& chmod a+rw -R /build/opt/forkboard/resources/app/logs \
 	&& chmod  a+rx /build/opt/forkboard/forkboard \
 	&& install -vDm644 assets/icons/fork-board.png /build/usr/share/icons/hicolor/512x512/apps/forkboard.png \
 	&& install -vDm755 /src/forkboard.sh /build/usr/bin/forkboard \
