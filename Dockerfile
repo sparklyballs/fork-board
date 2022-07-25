@@ -76,7 +76,7 @@ RUN \
 	&& mkdir -p /build \
 	&& set -ex \
 	&& tar -cjf /build/forkboard-${FORKBOARD_RELEASE}.tar.gz forkboard \
-	&& && chown -R 1000:1000 /build
+	&& chown -R 1000:1000 /build
  
 # copy files out to /mnt
 CMD ["cp", "-avr", "/build", "/mnt/"]
