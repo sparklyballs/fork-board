@@ -52,7 +52,6 @@ WORKDIR /src/forkboard
 # build package
 RUN \
 	set -ex \
-	&& npm add electron-packager \
 	&& npm install \
 	&& node_modules/.bin/electron-packager . forkboard --overwrite --linux --x64 --icon=assets/icons/fork-board-gray.png --prune=true --out=./out --ignore=^/assets/config
 
