@@ -37,14 +37,14 @@ RUN \
 	&& set -ex \
 	&& mkdir -p /src/forkboard \
 	&& curl -o \
-		/src/forkboard-${FORKBOARD_RELEASE}.tar.gz -L \
+		"/src/forkboard-${FORKBOARD_RELEASE}.tar.gz" -L \
 		"https://github.com/aaroncarpenter/fork-board/archive/refs/tags/v${FORKBOARD_RELEASE}.tar.gz" \
 	&& tar xf /src/forkboard-${FORKBOARD_RELEASE}.tar.gz -C \
 		/src/forkboard --strip-components=1
 
 # copy local files
-ADD forkboard.desktop /src/
-ADD forkboard.sh /src/
+COPY forkboard.desktop /src/
+COPY forkboard.sh /src/
 
 # set workdir
 WORKDIR /src/forkboard
@@ -69,12 +69,12 @@ RUN \
 	&& install -vDm644 /src/forkboard.desktop -t /forkboard/usr/share/applications
 
 # make build tarball
+WORKDIR /
 RUN \
 	. /tmp/version_crypto.txt \
-	&& cd / \
 	&& mkdir -p /build \
 	&& set -ex \
-	&& tar -cjf /build/forkboard-${FORKBOARD_RELEASE}.tar.gz forkboard \
+	&& tar -cjf "/build/forkboard-${FORKBOARD_RELEASE}.tar.gz" forkboard \
 	&& chown -R 1000:1000 /build
  
 # copy files out to /mnt
