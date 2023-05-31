@@ -67,7 +67,7 @@ steps {
 	sh ('docker run \
 	--rm=true -t -v $WORKSPACE:/mnt \
 	$CONTAINER_REPOSITORY:$BUILD_NUMBER')
-	archiveArtifacts artifacts: '$ARTIFACTS_LOCAL'
+	archiveArtifacts artifacts: '$env.ARTIFACTS_LOCAL'
 	}
 	}
 
