@@ -49,7 +49,7 @@ steps {
 	}
 
 
-stage('Build $CONTAINER_NAME') {
+stage('Build ${env.CONTAINER_NAME}') {
 steps {
 	sh ('docker buildx build \
 	--no-cache \
