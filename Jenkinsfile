@@ -67,7 +67,6 @@ steps {
 	sh ('docker run \
 	--rm=true -t -v $WORKSPACE:/mnt \
 	$CONTAINER_REPOSITORY:$BUILD_NUMBER')
-	archiveArtifacts artifacts: 'build/${ARTIFACTS_LOCAL}'
 	}
 	}
 
@@ -75,6 +74,7 @@ steps {
 
 post {
 success {
+archiveArtifacts artifacts: 'build/*.tar.gz'
 sshagent (credentials: ['bd8b00ff-decf-4a75-9e56-1ea2c7d0d708']) {
     sh('git tag -f $RELEASE_VER')
     sh('git push -f git@github.com:$GITHUB_REPOSITORY.git $RELEASE_VER')
