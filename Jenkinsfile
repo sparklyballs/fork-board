@@ -9,7 +9,6 @@ options {
 	}
 
 environment {
-	ARTIFACTS_LOCAL = '*.tar.gz'
 	CREDS_DOCKERHUB=credentials('420d305d-4feb-4f56-802b-a3382c561226')
 	CREDS_GITHUB=credentials('bd8b00ff-decf-4a75-9e56-1ea2c7d0d708')
 	CONTAINER_NAME = 'fork-board'
