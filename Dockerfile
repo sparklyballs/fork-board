@@ -2,7 +2,7 @@ ARG DEBIAN_VERSION="bullseye-slim"
 FROM debian:$DEBIAN_VERSION
 
 # build arguments
-# ARG RELEASE
+ARG RELEASE
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV PATH=/node_modules/.bin:$PATH
 
@@ -15,6 +15,7 @@ RUN \
 	ca-certificates \
 	curl \
 	git \
+	jq \
 	npm \
 	\
 # cleanup
@@ -24,23 +25,14 @@ RUN \
 		/var/lib/apt/lists/* \
 		/var/src/*
 
-# fetch version file
-RUN \
-	set -ex \
-	&& curl -o \
-	/tmp/version_crypto.txt -L \
-	"https://raw.githubusercontent.com/sparklyballs/versioning/master/version_crypto.txt"
-
 # fetch source
 RUN \
-	. /tmp/version_crypto.txt \
-	&& set -ex \
-	&& mkdir -p /src/forkboard \
-	&& curl -o \
-		"/src/forkboard-${FORKBOARD_RELEASE}.tar.gz" -L \
-		"https://github.com/aaroncarpenter/fork-board/archive/refs/tags/v${FORKBOARD_RELEASE}.tar.gz" \
-	&& tar xf /src/forkboard-${FORKBOARD_RELEASE}.tar.gz -C \
-		/src/forkboard --strip-components=1
+	if [ -z ${RELEASE+x} ]; then \
+	RELEASE=$(curl -u "${SECRETUSER}:${SECRETPASS}" -sX GET "https://api.github.com/repos/aaroncarpenter/fork-board/releases/latest" \
+	| jq -r ".tag_name"); \
+	fi \
+	&& git clone --branch "${RELEASE}" --recurse-submodules=mozilla-ca https://github.com/aaroncarpenter/fork-board.git /src/forkboard
+
 
 # copy local files
 COPY forkboard.desktop /src/
@@ -71,10 +63,13 @@ RUN \
 # make build tarball
 WORKDIR /
 RUN \
-	. /tmp/version_crypto.txt \
+        if [ -z ${RELEASE+x} ]; then \
+        RELEASE=$(curl -u "${SECRETUSER}:${SECRETPASS}" -sX GET "https://api.github.com/repos/aaroncarpenter/fork-board/releases/latest" \
+        | jq -r ".tag_name"); \
+        fi \
 	&& mkdir -p /build \
 	&& set -ex \
-	&& tar -cjf "/build/forkboard-${FORKBOARD_RELEASE}.tar.gz" forkboard \
+	&& tar -cjf "/build/forkboard-${RELEASE}.tar.gz" forkboard \
 	&& chown -R 1000:1000 /build
  
 # copy files out to /mnt
