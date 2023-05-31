@@ -49,7 +49,7 @@ steps {
 	}
 
 
-stage('Build ${env.CONTAINER_NAME}') {
+stage('Build Application') {
 steps {
 	sh ('docker buildx build \
 	--no-cache \
@@ -61,7 +61,7 @@ steps {
 	}
 	}
 
-stage('Archive $CONTAINER_NAME') {
+stage('Archive Application') {
 steps {
 	sh ('docker run \
 	--rm=true -t -v $WORKSPACE:/mnt \
