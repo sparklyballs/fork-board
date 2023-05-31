@@ -6,6 +6,9 @@ ARG RELEASE
 ARG DEBIAN_FRONTEND="noninteractive"
 ENV PATH=/node_modules/.bin:$PATH
 
+# set shell
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
+
 # install build dependencies
 RUN \
 	apt-get update \
