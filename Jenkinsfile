@@ -66,6 +66,7 @@ steps {
 	sh ('docker run \
 	--rm=true -t -v $WORKSPACE:/mnt \
 	$CONTAINER_REPOSITORY:$BUILD_NUMBER')
+	archiveArtifacts artifacts: 'build/*.tar.gz'
 	}
 	}
 
