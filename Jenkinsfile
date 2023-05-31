@@ -49,7 +49,7 @@ steps {
 	}
 
 
-stage('Build Docker Image') {
+stage('Build $CONTAINER_NAME') {
 steps {
 	sh ('docker buildx build \
 	--no-cache \
@@ -58,6 +58,14 @@ steps {
 	-t $CONTAINER_REPOSITORY:$RELEASE_VER \
 	--build-arg RELEASE=$RELEASE_VER \
 	.')
+	}
+	}
+
+stage('Archive $CONTAINER_NAME') {
+steps {
+	sh ('docker run \
+	--rm=true -t -v $WORKSPACE:/mnt \
+	$CONTAINER_REPOSITORY:$BUILD_NUMBER')
 	}
 	}
 
