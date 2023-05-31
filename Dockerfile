@@ -34,7 +34,7 @@ RUN \
 	RELEASE=$(curl -u "${SECRETUSER}:${SECRETPASS}" -sX GET "https://api.github.com/repos/aaroncarpenter/fork-board/releases/latest" \
 	| jq -r ".tag_name"); \
 	fi \
-	&& git clone --branch "${RELEASE}" --recurse-submodules=mozilla-ca https://github.com/aaroncarpenter/fork-board.git /src/forkboard
+	&& git clone --branch "${RELEASE}" https://github.com/aaroncarpenter/fork-board.git /src/forkboard
 
 
 # copy local files
