@@ -1,4 +1,4 @@
-ARG DEBIAN_VERSION="bullseye-slim"
+ARG DEBIAN_VERSION="bookworm-slim"
 FROM debian:$DEBIAN_VERSION
 
 # build arguments
